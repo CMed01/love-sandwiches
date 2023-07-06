@@ -54,24 +54,35 @@ def validate_data(values):
     return True
     
 
-def update_sales_spreadsheet(data):
-    """
-    Update sales spreadsheet, add ned row with the list data provided
-    """
-    print("Updating sales worksheet.... \n")
-    sales_worksheet = SHEET.worksheet("sales")
-    sales_worksheet.append_row(data)
-    print("Sales worksheet updated successfully.\n")
+# def update_sales_spreadsheet(data):
+#     """
+#     Update sales spreadsheet, add ned row with the list data provided
+#     """
+#     print("Updating sales worksheet.... \n")
+#     sales_worksheet = SHEET.worksheet("sales")
+#     sales_worksheet.append_row(data)
+#     print("Sales worksheet updated successfully.\n")
 
 
-def update_surplus_spreadsheet(data):
+# def update_surplus_spreadsheet(data):
+#     """
+#     Update surplus spreadsheet, add ned row with the list data provided
+#     """
+#     print("Updating surplus worksheet.... \n")
+#     surplus_worksheet = SHEET.worksheet("surplus")
+#     surplus_worksheet.append_row(data)
+#     print("Surplus worksheet updated successfully.\n")
+
+
+def update_worksheet(data, worksheet):
     """
-    Update surplus spreadsheet, add ned row with the list data provided
+    Recieves a list of integers to be inserted into a worksheet
+    Update the relevant worksheey with the data provided 
     """
-    print("Updating surplus worksheet.... \n")
-    surplus_worksheet = SHEET.worksheet("surplus")
-    surplus_worksheet.append_row(data)
-    print("Surplus worksheet updated successfully.\n")
+    print(f"Updating {worksheet} worksheet....\n")
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    worksheet_to_update.append_row(data)
+    print(f"{worksheet} worksheet updated successfully.\n")
 
 
 def calculate_surplus_data(sales_row):
@@ -82,7 +93,7 @@ def calculate_surplus_data(sales_row):
     - Positive surplus indicates waste
     - Negatove surplus indicats extra made when stock was sold.
     """
-    print("Calculating surplus data...")
+    print("Calculating surplus data...\n")
     stock = SHEET.worksheet("stock").get_all_values()
     stock_row = stock[-1]
    
@@ -101,9 +112,9 @@ def main():
     """
     data = get_sales_data() 
     sales_data = [int(num) for num in data]
-    update_sales_spreadsheet(sales_data)
+    update_worksheet(sales_data, "sales")
     new_surplus_data = calculate_surplus_data(sales_data)
-    update_surplus_spreadsheet(new_surplus_data)
+    update_worksheet(new_surplus_data, "surplus")
     
 
 print("Welcome to Love Sandwiches data automation")
