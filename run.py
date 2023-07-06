@@ -70,10 +70,17 @@ def calculate_surplus_data(sales_row):
     - Positive surplus indicates waste
     - Negatove surplus indicats extra made when stock was sold.
     """
+    print("Calculating surplus data...")
     stock = SHEET.worksheet("stock").get_all_values()
     stock_row = stock[-1]
-    stock_data = [int(num) for num in stock_row]
-    pprint(stock_data)
+   
+    surplus_data = []
+
+    for num1, num2 in  zip(stock_row, sales_row):
+        surplus = int(num1) - num2
+        surplus_data.append(surplus)
+
+    return surplus_data
 
 
 
@@ -84,7 +91,8 @@ def main():
     data = get_sales_data() 
     sales_data = [int(num) for num in data]
     update_sales_spreadsheet(sales_data)
-    calculate_surplus_data(sales_data)
+    new_surplus_data = calculate_surplus_data(sales_data)
+    print(new_surplus_data)
 
 print("Welcome to Love Sandwiches data automation")
 print("---------------------------------------\n")
